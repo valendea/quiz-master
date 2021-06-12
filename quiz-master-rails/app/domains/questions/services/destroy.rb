@@ -2,7 +2,7 @@ module Questions
   module Services
     class Destroy
       def self.run(question)
-        return :not_ok if question.nil?
+        return :not_found if question.nil?
   
         if question.update(status: Question::DELETED)
           return :ok

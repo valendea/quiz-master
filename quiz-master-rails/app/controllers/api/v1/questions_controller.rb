@@ -29,6 +29,8 @@ module Api
         status = Questions::Services::Destroy.run(@question)
         if status == :ok
           render json: { message: "Success" }, status: :ok
+        elsif status == :not_found
+          render json: { message: "Question not found" }, status: :not_found
         else
           render json: { message: "Something went wrong" }, status: :unprocessable_entity
         end
