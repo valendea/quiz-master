@@ -6,32 +6,29 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
   describe 'GET questions#index' do
     before(:each) do
       create_list :question, 3
+      get :index, format: :json
     end
 
     it 'responds with a success HTTP status' do
-      get :index, format: :json
-
       expect(response).to have_http_status(200)
     end
 
     it 'returns a JSON with correct data' do
-      get :index, format: :json
-
       expect(JSON.parse(response.body)["data"].count).to eq(3)
     end
   end
 
   describe 'GET questions#show' do
     context 'with valid params' do
-      it 'responds with a success HTTP status' do
+      before(:each) do
         get :show, params: { id: question.id }, format: :json
+      end
 
+      it 'responds with a success HTTP status' do
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns a JSON with correct data' do
-        get :show, params: { id: question.id }, format: :json
-
         expect(JSON.parse(response.body)["data"]["attributes"]).to include(
           'id' => question.id,
           'content' => question.content,
@@ -41,15 +38,15 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'responds with a HTTP status not found' do
+      before(:each) do
         get :show, params: { id: 0000 }, format: :json
+      end
 
+      it 'responds with a HTTP status not found' do
         expect(response).to have_http_status(:not_found)
       end
 
       it 'returns a JSON with message not found' do
-        get :show, params: { id: 0000 }, format: :json
-
         expect(JSON.parse(response.body)).to include(
           'message' => "Question not found"
         )
@@ -60,15 +57,15 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
 
   describe 'DELETE questions#destroy' do
     context 'with valid params' do
-      it 'responds with a success HTTP status' do
+      before(:each) do
         delete :destroy, params: { id: question.id }, format: :json
+      end
 
+      it 'responds with a success HTTP status' do
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns a JSON with message success' do
-        delete :destroy, params: { id: question.id }, format: :json
-
         expect(JSON.parse(response.body)).to include(
           'message' => "Success"
         )
@@ -76,17 +73,97 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'responds with a HTTP status not found' do
+      before(:each) do
         delete :destroy, params: { id: 0000 }, format: :json
+      end
 
+      it 'responds with a HTTP status not found' do
         expect(response).to have_http_status(:not_found)
       end
 
       it 'returns a JSON with message not found' do
-        delete :destroy, params: { id: 0000 }, format: :json
-
         expect(JSON.parse(response.body)).to include(
           'message' => "Question not found"
+        )
+      end
+    end
+  end
+
+  describe 'POST questions#create' do
+    context 'with valid params' do
+      let(:question_params) do
+        { 
+          "question" => {
+            "content" => "Calculate 10+10", "answer" => "100" 
+          }
+        } 
+      end
+
+      before(:each) do
+        post :create, params: question_params 
+      end
+
+      it 'responds with a success HTTP status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns a JSON with correct data' do
+        expect(JSON.parse(response.body)["data"]["attributes"]).to include(
+          'content' => question_params["question"]["content"],
+          'answer' => question_params["question"]["answer"]
+        )
+      end
+    end
+
+    context 'with invalid params' do
+      let(:question_params) do
+        { 
+          "question" => { 
+            "content" => "Calculate 10+10" 
+          }
+        } 
+      end
+
+      before(:each) do
+        post :create, params: question_params 
+      end
+
+      it 'responds with HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns a JSON with message' do
+        expect(JSON.parse(response.body)).to include(
+          'message' => "Something went wrong"
+        )
+      end
+    end
+  end
+
+  describe 'PUT questions#update' do
+    context 'with valid params' do
+      let(:question_params) do
+        { 
+          "id" => question.id,
+          "question" => {
+            "content" => "Calculate 10+10", 
+            "answer" => "100" 
+          }
+        } 
+      end
+
+      before(:each) do
+        put :update, params: question_params 
+      end
+
+      it 'responds with a success HTTP status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns a JSON with correct data' do
+        expect(JSON.parse(response.body)["data"]["attributes"]).to include(
+          'content' => question_params["question"]["content"],
+          'answer' => question_params["question"]["answer"]
         )
       end
     end

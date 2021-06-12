@@ -12,6 +12,12 @@ module Api
       end
 
       def create
+        status, question = Questions::Services::Create.run(question_params)
+        if status == :ok
+          render json: Questions::QuestionsSerializer.new(question).serializable_hash
+        else
+          render json: { message: "Something went wrong" }, status: :unprocessable_entity
+        end
       end
 
       def show
@@ -23,6 +29,14 @@ module Api
       end
 
       def update
+        status, question = Questions::Services::Update.run(@question, question_params)
+        if status == :ok
+          render json: Questions::QuestionsSerializer.new(question).serializable_hash
+        elsif status == :not_found
+          render json: { message: "Question not found" }, status: :not_found
+        else
+          render json: { message: "Something went wrong" }, status: :unprocessable_entity
+        end
       end
 
       def destroy
@@ -45,6 +59,10 @@ module Api
         @question = Question.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         return nil
+      end
+
+      def question_params
+        params.require(:question).permit(:content, :answer)
       end
     
     end
