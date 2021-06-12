@@ -3,8 +3,8 @@ module Questions
     class Update
       def self.run(question, params)
         return :not_found, nil if question.nil?
-
-        if question.update(params)
+        
+        if params.present? && question.update(params)
           return :ok, question
         else
           return :not_ok, nil

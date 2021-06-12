@@ -100,7 +100,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
       end
 
       before(:each) do
-        post :create, params: question_params 
+        post :create, params: question_params, format: :json
       end
 
       it 'responds with a success HTTP status' do
@@ -125,7 +125,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
       end
 
       before(:each) do
-        post :create, params: question_params 
+        post :create, params: question_params, format: :json
       end
 
       it 'responds with HTTP status unprocessable entity' do
@@ -140,7 +140,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
     end
   end
 
-  describe 'PUT questions#update' do
+  describe 'PUT questions#update' do   
     context 'with valid params' do
       let(:question_params) do
         { 
@@ -153,7 +153,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
       end
 
       before(:each) do
-        put :update, params: question_params 
+        put :update, params: question_params, format: :json
       end
 
       it 'responds with a success HTTP status' do
@@ -164,6 +164,31 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
         expect(JSON.parse(response.body)["data"]["attributes"]).to include(
           'content' => question_params["question"]["content"],
           'answer' => question_params["question"]["answer"]
+        )
+      end
+    end
+
+    context 'with invalid params' do
+      let(:question_params) do
+        { 
+          "id" => question.id,
+          "question" => {
+            "key" => 123
+          }
+        }
+      end
+
+      before(:each) do
+        put :update, params: question_params, format: :json
+      end
+
+      it 'responds with HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns a JSON with message' do
+        expect(JSON.parse(response.body)).to include(
+          'message' => "Something went wrong"
         )
       end
     end
