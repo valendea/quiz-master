@@ -51,6 +51,14 @@ module Api
       end
 
       def check_answer
+        status, is_correct = Questions::Services::CheckAnswer.run(@question, user_answer_params)
+        if status == :ok
+          render json: { correct: is_correct }, status: :ok
+        elsif status == :not_found
+          render json: { message: "Question not found" }, status: :not_found
+        else
+          render json: { message: "Something went wrong" }, status: :unprocessable_entity
+        end
       end
 
       private
@@ -63,6 +71,10 @@ module Api
 
       def question_params
         params.require(:question).permit(:content, :answer)
+      end
+
+      def user_answer_params
+        params.require(:question).permit(:answer)
       end
     
     end

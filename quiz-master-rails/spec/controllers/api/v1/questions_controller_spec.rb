@@ -193,4 +193,33 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'POST questions#check_answer' do
+    context 'given correct answer' do
+      it 'returns JSON with success message' do
+        post :check_answer, params: { id: question.id, question: { answer: question.answer } }, format: :json
+
+        expect(JSON.parse(response.body)).to include({ 'correct' => true })
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'given incorrect answer' do
+      it 'returns JSON with success message' do
+        post :check_answer, params: { id: question.id, question: { answer: 'wrong answer' } }, format: :json
+
+        expect(JSON.parse(response.body)).to include({ 'correct' => false })
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'given blank answer' do
+      it 'render JSON with error message' do
+        post :check_answer, params: { id: question.id, question: { answer: '' } }, format: :json
+
+        expect(JSON.parse(response.body)).to include({ 'message' => 'Something went wrong' })
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
