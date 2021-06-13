@@ -94,7 +94,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
       let(:question_params) do
         { 
           "question" => {
-            "content" => "Calculate 10+10", "answer" => "100" 
+            "content" => "Calculate 10+10", "answer" => "20" 
           }
         } 
       end
@@ -147,7 +147,7 @@ RSpec.describe Api::V1::QuestionsController, type: :controller do
           "id" => question.id,
           "question" => {
             "content" => "Calculate 10+10", 
-            "answer" => "100" 
+            "answer" => "20" 
           }
         } 
       end

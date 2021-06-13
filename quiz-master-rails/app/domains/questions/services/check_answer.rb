@@ -3,9 +3,10 @@ module Questions
     class CheckAnswer
       def self.run(question, params)
         return :not_found, nil if question.nil?
-        return :unprocessable_entity, nil if params[:answer].empty?
-
+        
         user_answer = sanitize_answer(params[:answer])
+        return :unprocessable_entity, nil if user_answer.empty?
+
         real_answer = sanitize_answer(question.answer)
 
         return :ok, is_correct?(user_answer, real_answer)
