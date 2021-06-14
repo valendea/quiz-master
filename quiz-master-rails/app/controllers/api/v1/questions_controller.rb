@@ -70,7 +70,7 @@ module Api
       end
 
       def question_params
-        params.require(:question).permit(:content, :answer)
+        params.require(:question).permit(:content, :answer, :status)
       end
 
       def user_answer_params
