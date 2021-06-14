@@ -19,7 +19,7 @@ module Questions
 
       def self.by_status(questions, params)
         if params.present?
-          questions.where(status: params[:status])
+          questions = questions.where(status: params[:status])
         end
         return questions
       end

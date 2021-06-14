@@ -4,7 +4,7 @@ module Api
       before_action :set_question, only: [:show, :update, :destroy, :check_answer]
 
       def index
-        questions, meta = Questions::Queries::All.run
+        questions, meta = Questions::Queries::All.run(params)
         options = {}
 
         options[:meta] = meta
