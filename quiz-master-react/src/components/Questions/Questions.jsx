@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Content from "../Content/Content";
 
 import "./Questions.scss";
 
 const API_URL = 'http://localhost:3000'
+const APP_URL = 'http://localhost:3001'
 
 const Question = () => {
   const [questions, setQuestions] = useState([])
@@ -16,7 +19,7 @@ const Question = () => {
   const inputRef = useRef(null)
 
   const fetchQuestions = async () => {
-    return await fetch(`${API_URL}/api/v1/questions/`, {
+    return await fetch(`${API_URL}/api/v1/questions?status=active`, {
       method: "GET",
       headers: { 'Content-Type': 'application/json' }
     })
@@ -56,10 +59,14 @@ const Question = () => {
   }, [])
 
   useEffect(() => {
-    if (questions.length > 0) {
-      const question = questions[currentQuestionCounter].attributes
-      setCurrentQuestion(question)
+    if (questions.length <= 0) return
+
+    const question = questions[currentQuestionCounter]
+    if (question === undefined) {
+      window.location.href = `${APP_URL}/completion`;
+      return
     }
+    setCurrentQuestion(question.attributes)
   }, [questions, currentQuestionCounter])
 
   useEffect(() => {
@@ -71,21 +78,33 @@ const Question = () => {
 
     const { correct } = checkAnswerData
     if (correct) {
-      console.log("correct")
+      toast.success("That's correct!");
     } else {
-      console.log("nope")
+      toast.error('Wrong answer. Please try again.');
     }
   }, [checkAnswerData])
 
-
   return (
-    <Content
-      question={currentQuestion}
-      handleSubmit={handleSubmit}
-      handleAnswer={handleAnswer}
-      handleNext={handleNext}
-      inputRef={inputRef}
-    />
+    <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Content
+        question={currentQuestion}
+        handleSubmit={handleSubmit}
+        handleAnswer={handleAnswer}
+        handleNext={handleNext}
+        inputRef={inputRef}
+      />
+    </div>
   )
 }
 
