@@ -1,0 +1,17 @@
+.Button {
+  &__Primary {
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 2px;
+    padding: 16px 32px;
+    border: solid 1px #0c0c83;
+    background: linear-gradient(234deg, rgba(2,0,36,1) 0%, rgba(12,12,131,1) 6%, rgba(0,212,255,1) 100%);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #ffffff;
+    &:hover {
+      background: #0c0c83;
+    }
+  }
+}
