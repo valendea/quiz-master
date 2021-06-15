@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Markup } from 'interweave';
+import { Link } from "react-router-dom";
 import "./List.scss";
 
 const API_URL = 'http://localhost:3000'
@@ -28,7 +30,7 @@ const List = () => {
       })
     })
       .then(response => response.json())
-      .then(resp => fetchQuestions())
+      .then(() => fetchQuestions())
       .catch(error => console.log(error)
     )
   }
@@ -42,15 +44,18 @@ const List = () => {
     return (
       <tr key={id}>
         <td>{status}</td>
-        <td>{content}</td>
+        <td>
+          <Markup content={content} />
+        </td>
         <td>{answer}</td>
         <td>
-          <div onClick={() => handleStatus(id, "delete")}>Delete</div>
+          <Link to={`/questions/${id}/edit`}>Edit</Link>
           { status === 'active' ?
             <div onClick={() => handleStatus(id, "inactive")}>Inactive</div>
               :
             <div onClick={() => handleStatus(id, "active")}>Active</div>
           }
+          <div onClick={() => handleStatus(id, "delete")}>Delete</div>
         </td>
       </tr>
     )

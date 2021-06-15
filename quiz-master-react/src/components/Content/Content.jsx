@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Markup } from 'interweave';
 
 import { Input } from "../Global/Input/Input";
 import { PrimaryButton, SecondaryButton } from "../Global/Button/Button";
@@ -17,7 +18,9 @@ const Content = ({ question, handleSubmit, handleAnswer, handleNext, inputRef })
   return (
     <div className="Content">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <p>{content}</p>
+        <p>
+          <Markup content={content}/>
+        </p>
         <Input
           placeholder="Enter your answer"
           onChange={(e) => handleAnswer(e)}
