@@ -18,17 +18,23 @@ const Content = ({ question, handleSubmit, handleAnswer, handleNext, inputRef })
   return (
     <div className="Content">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <p>
+        <div className="Content__Question">
           <Markup content={content}/>
-        </p>
-        <Input
-          placeholder="Enter your answer"
-          onChange={(e) => handleAnswer(e)}
-          ref={inputRef}
-        />
-        <PrimaryButton type="submit">Check my answer</PrimaryButton>
+        </div>
+        <div className="Content__Answer">
+          <Input
+            placeholder="Enter your answer"
+            onChange={(e) => handleAnswer(e)}
+            ref={inputRef}
+          />
+        </div>
+        <div className="Content__Submit_Button">
+          <PrimaryButton type="submit">Check my answer</PrimaryButton>
+        </div>
       </form>
-      <SecondaryButton onClick={handleNext}>Next</SecondaryButton>
+      <div className="Content__Next_Button">
+        <SecondaryButton onClick={handleNext}>Next</SecondaryButton>
+      </div>
     </div>
   )
 }

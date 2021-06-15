@@ -4,6 +4,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import { Link } from "react-router-dom";
 
 import { Input } from "../Global/Input/Input";
 import { PrimaryButton } from "../Global/Button/Button";
@@ -11,7 +12,7 @@ import "./Form.scss"
 
 const API_URL = 'http://localhost:3000'
 
-const Form = ({ action, id = undefined, question = undefined }) => {
+const Form = ({ action, id = undefined, question = null }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
   const [htmlEditorState, setHtmlEditorState] = useState("")
   const [answer, setAnswer] = useState("")
@@ -55,11 +56,7 @@ const Form = ({ action, id = undefined, question = undefined }) => {
   }, [editorState])
 
   useEffect(() => {
-    console.log(htmlEditorState)
-  }, [htmlEditorState])
-
-  useEffect(() => {
-    if (Object.keys(question).length <= 0) return
+    if (question === null || question === undefined || Object.keys(question).length <= 0) return
 
     const contentBlock = htmlToDraft(question.content);
     if (contentBlock) {
@@ -71,10 +68,12 @@ const Form = ({ action, id = undefined, question = undefined }) => {
   }, [question])
 
   return (
-    <div>
+    <div className="Form">
+      <Link to="/list">Back to Question List</Link>
+
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="Form__Editor">
-          <p>Question</p>
+          <h3>Question</h3>
           <Editor
             editorState={editorState}
             toolbarClassName="toolbarClassName"
@@ -85,7 +84,7 @@ const Form = ({ action, id = undefined, question = undefined }) => {
         </div>
 
         <div className="Form__Answer">
-          <p>Answer</p>
+          <h3>Answer</h3>
           <Input
             value={answer}
             onChange={(e) => handleAnswer(e)}
@@ -93,7 +92,9 @@ const Form = ({ action, id = undefined, question = undefined }) => {
           />
         </div>
 
-        <PrimaryButton type="submit">Submit</PrimaryButton>
+        <div className="Form__Button">
+          <PrimaryButton type="submit">Submit</PrimaryButton>
+        </div>
       </form>
     </div>
     

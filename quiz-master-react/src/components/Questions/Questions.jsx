@@ -85,25 +85,27 @@ const Question = () => {
   }, [checkAnswerData])
 
   return (
-    <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Content
-        question={currentQuestion}
-        handleSubmit={handleSubmit}
-        handleAnswer={handleAnswer}
-        handleNext={handleNext}
-        inputRef={inputRef}
-      />
+    <div className="Question">
+      <div className="Question__Wrapper">
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Content
+          question={currentQuestion}
+          handleSubmit={handleSubmit}
+          handleAnswer={handleAnswer}
+          handleNext={handleNext}
+          inputRef={inputRef}
+        />
+      </div>
     </div>
   )
 }

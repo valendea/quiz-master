@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Markup } from 'interweave';
 import { Link } from "react-router-dom";
+
+import { PrimaryButton } from "../Global/Button/Button";
 import "./List.scss";
 
 const API_URL = 'http://localhost:3000'
@@ -51,20 +53,25 @@ const List = () => {
         <td>
           <Link to={`/questions/${id}/edit`}>Edit</Link>
           { status === 'active' ?
-            <div onClick={() => handleStatus(id, "inactive")}>Inactive</div>
+            <div className="List__Action" onClick={() => handleStatus(id, "inactive")}>Inactive</div>
               :
-            <div onClick={() => handleStatus(id, "active")}>Active</div>
+            <div className="List__Action" onClick={() => handleStatus(id, "active")}>Active</div>
           }
-          <div onClick={() => handleStatus(id, "delete")}>Delete</div>
+          <div className="List__Action" onClick={() => handleStatus(id, "delete")}>Delete</div>
         </td>
       </tr>
     )
   })
 
   return (
-    <div>
-      <h1>Question List</h1>
-      <table>
+    <div className="List">
+      <div className="List__Title_Wrapper">
+        <h1>Question List</h1>
+        <Link to="/questions/new">
+          <PrimaryButton>Add new question</PrimaryButton>
+        </Link>
+      </div>
+      <table className="List__Table">
         <thead>
           <tr>
             <th>Status</th>

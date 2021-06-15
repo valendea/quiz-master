@@ -1,0 +1,20 @@
+.Content {
+  min-width: 25vw;
+
+  &__Question {
+    margin-bottom: 30px;
+  }
+
+  &__Answer {
+    margin-bottom: 40px;
+  }
+
+  &__Submit_Button {
+    text-align: center;
+  }
+
+  &__Next_Button {
+    text-align: center;
+    margin-top: 20px;
+  }
+}

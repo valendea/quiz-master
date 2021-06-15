@@ -1,3 +1,23 @@
 .Welcome {
   font-family: 'DM Sans', sans-serif;
+  height: 90vh;
+  display: grid;
+
+  &__Wrapper {
+    margin: auto;
+  }
+
+  &__Title {
+    font-size: 3.5em;
+    margin-bottom: 30px;
+  }
+
+  &__Links {
+    text-align: center;
+    display: grid;
+  }
+
+  &__Links a:first-child {
+    margin-bottom: 15px;
+  }
 }
