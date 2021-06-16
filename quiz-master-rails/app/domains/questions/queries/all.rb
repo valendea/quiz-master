@@ -1,7 +1,7 @@
 module Questions
   module Queries
     class All
-      def self.run(params = nil)
+      def self.run(params)
         meta = {}
         questions = Question.where(status: Question::DEFAULT_STATUSES)
         

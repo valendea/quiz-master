@@ -8,15 +8,15 @@
 
 questions = [
   {
-    content: "How many letters are there in the English alphabet?",
+    content: "<p>How many letters are there in the English alphabet?</p>",
     answer: "26"
   },
   {
-    content: "Calculate 1+1",
+    content: "<p>Calculate 1+1</p>",
     answer: "2"
   },
   {
-    content: "What is capital city of Indonesia?",
+    content: "<p>What is capital city of Indonesia?</p>",
     answer: "Jakarta"
   }
 ]
