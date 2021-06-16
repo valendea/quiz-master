@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 
 import Header from "./components/Global/Header/Header";
 import routes from "./routes";

@@ -1,28 +1,39 @@
 {
   "name": "quiz-master-react",
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "./tests-setup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    }
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.14.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "dotenv": "^10.0.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "html-to-draftjs": "^1.5.0",
     "interweave": "^12.7.2",
     "node-sass": "^6.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "react-toastify": "^7.0.4",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts start",
+    "start": "PORT=3001 react-scripts start DOTENV_CONFIG_PATH=../.env",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -42,5 +53,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-export-default-from": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
+    "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "jest": "^27.0.4",
+    "jsdom": "16.6.0",
+    "jsdom-global": "3.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

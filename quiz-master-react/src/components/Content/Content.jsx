@@ -25,11 +25,10 @@ const Content = ({ question, handleSubmit, handleAnswer, handleNext, inputRef })
           <Input
             placeholder="Enter your answer"
             onChange={(e) => handleAnswer(e)}
-            ref={inputRef}
           />
         </div>
         <div className="Content__Submit_Button">
-          <PrimaryButton type="submit">Check my answer</PrimaryButton>
+          <PrimaryButton type="submit" id="submit-button">Check my answer</PrimaryButton>
         </div>
       </form>
       <div className="Content__Next_Button">
