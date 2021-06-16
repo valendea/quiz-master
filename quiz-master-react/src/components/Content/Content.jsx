@@ -25,6 +25,7 @@ const Content = ({ question, handleSubmit, handleAnswer, handleNext, inputRef })
           <Input
             placeholder="Enter your answer"
             onChange={(e) => handleAnswer(e)}
+            ref={inputRef}
           />
         </div>
         <div className="Content__Submit_Button">

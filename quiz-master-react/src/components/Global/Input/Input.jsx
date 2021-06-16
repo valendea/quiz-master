@@ -1,8 +1,8 @@
 import React from "react";
 import "./Input.scss";
 
-export const Input = (props) => {
+export const Input = React.forwardRef((props, ref) => {
   return (
-    <input className='Input' {...props} />
+    <input ref={ref} className='Input' {...props} />
   )
-}
+})
