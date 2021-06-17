@@ -1,6 +1,21 @@
 # Quiz Master
-
 An app built with Ruby on Rails for server-side and React.js for client-side.
+
+## Prerequisites
+```
+$ ruby -v && rails -v
+ruby 2.7.1
+Rails 6.0.3.7
+```
+
+
+```
+$ npm -v && node -v       
+6.14.4
+v14.4.0
+
+```
+
 
 ## Installation
 
@@ -60,3 +75,14 @@ npm test
 - User is able to answer question with immediate response whether answer is correct or wrong
 - User is able to submit answer with words or number
 - User is able to create question with formatted question or insert image/emoji with WYSIWYG editor
+
+## Endpoints
+```
+GET     /api/v1/questions
+POST    /api/v1/questions
+GET     /api/v1/questions/:id
+PATCH   /api/v1/questions/:id
+PUT     /api/v1/questions/:id
+DELETE  /api/v1/questions/:id
+POST    /api/v1/questions/:id/check-answer
+```
